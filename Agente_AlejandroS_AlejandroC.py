@@ -1,10 +1,10 @@
 import sys
-
+import label
 
 def main():
     print("-main-")
     state = [[0, 1, 2], [2, 0, 0], [1, 0, 0]]
-    player = 1
+    player = label.P1
     action = agent(state, player)
     print("Put a piece in the position: ")
     print(action)
