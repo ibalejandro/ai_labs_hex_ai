@@ -1,5 +1,11 @@
-import sys
 import label
+import random
+
+def __init__(estado, jugadorActual):
+    return get_action_to_take(estado, jugadorActual)
+
+def get_action_to_take(state, player):
+    return [random.randint(0,10),random.randint(0,10)]
 
 def main():
     print("-main-")
@@ -46,3 +52,4 @@ def agent(state, player):
 
 if __name__ == '__main__':
     main()
+

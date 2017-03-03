@@ -36,7 +36,7 @@ def run_minimax(state, player):
         update_max_depth()
     current_player = player
     state_utility = -math.inf
-    action = (math.inf, -math.inf)
+    action = [math.inf, -math.inf]
     for i in range(0, len(state)):
         for j in range(0, len(state[i])):
             piece_owner = state[i][j]
@@ -46,7 +46,7 @@ def run_minimax(state, player):
                 min_or_max_value = minimax(i, j, next_state, 1)
                 if min_or_max_value > state_utility:
                     state_utility = min_or_max_value
-                    action = (i, j)
+                    action = [i, j]
     count_turn += 2
     return action
 
