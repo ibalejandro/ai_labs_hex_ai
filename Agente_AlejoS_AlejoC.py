@@ -2,16 +2,16 @@ import math
 import copy
 
 
-class AgenteAlejandroSAlejandroC:
+class AgenteAlejoSAlejoC:
 
-    BOARD_LENGTH_AND_WIDTH = 5
+    BOARD_LENGTH_AND_WIDTH = 11
     P1 = 1
 
     # Constructor.
     def __init__(self):
         self.current_player = 0  # There is no current_player at that moment.
         self.turnsCount = 0
-        self.max_depth = 3  # It can´t be higher at the beginning due to the time constraint of 2 seconds.
+        self.max_depth = 2  # It can´t be higher at the beginning due to the time constraint of 2 seconds.
 
     # Returns the best action for the current state of the game.
     def get_action_to_take(self, state, current_player):
