@@ -33,11 +33,11 @@ class AgenteAlejoSAlejoC:
                     if is_depth_odd:
                         if minimax_value > state_utility:
                             state_utility = minimax_value
-                            action = [i, j]
+                            action = (i, j)
                     else:
                         if minimax_value < state_utility:
                             state_utility = minimax_value
-                            action = [i, j]
+                            action = (i, j)
         self.turnsCount += 2  # When this algorithm executes again, the current turn will be incremented by two.
         return action
 

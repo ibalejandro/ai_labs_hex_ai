@@ -3,8 +3,20 @@ import copy
 
 
 class AgenteAlejandroSAlejandroCTry:
+    weight = \
+        [[0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0],
+         [1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1],
+         [2, 3, 4, 5, 6, 7, 6, 5, 4, 3, 2],
+         [3, 4, 5, 6, 7, 8, 7, 6, 5, 4, 3],
+         [4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4],
+         [5, 6, 7, 8, 9, 10, 9, 8, 7, 6, 5],
+         [4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4],
+         [3, 4, 5, 6, 7, 8, 7, 6, 5, 4, 3],
+         [2, 3, 4, 5, 6, 7, 6, 5, 4, 3, 2],
+         [1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1],
+         [0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0]]
 
-    BOARD_LENGTH_AND_WIDTH = 3
+    BOARD_LENGTH_AND_WIDTH = 11
     P1 = 1
 
     # Constructor.
@@ -27,10 +39,15 @@ class AgenteAlejandroSAlejandroCTry:
                     # The MiniMax algorithm receives the modification, the state with that modification, a 1 indicating
                     # that one movement has already been done and the alpha and the beta values.
                     minimax_value = self.minimax(i, j, next_state, 1, state_utility, math.inf)
-                    print("For", i, ",", j, ":", minimax_value)
+                    #print("For", i, ",", j, ":", minimax_value)
                     if minimax_value > state_utility:
                         state_utility = minimax_value
                         action = [i, j]
+                    elif minimax_value == state_utility:
+                        is_current_eval_better = (True if self.weight[i][j] > self.weight[action[0]][action[1]] else False)
+                        if is_current_eval_better:
+                            action = [i, j]
+
         self.turnsCount += 2  # When this algorithm executes again, the current turn will be incremented by two.
         return action
 
@@ -40,6 +57,7 @@ class AgenteAlejandroSAlejandroCTry:
 
         # If the state's depth is at the limit, the utility is calculated using the evaluation function.
         if depth == self.max_depth:
+#            print("depth", depth)
             return self.get_utility_from_eval_function(row_modified, column_modified, state)
 
         # Iterates over every field on the board.
@@ -56,6 +74,7 @@ class AgenteAlejandroSAlejandroCTry:
                     if is_state_level_minimizing:
                         state_utility = min(state_utility, minimax_value)
                         if state_utility <= alpha:
+#                            print("alpha")
                             # The current state utility is bad enough with respect to the best already explored option
                             # along the path to the root for maximizing levels. It is already known that this state
                             # won´t be took into account in the above max level.
@@ -66,6 +85,7 @@ class AgenteAlejandroSAlejandroCTry:
                     else:
                         state_utility = max(state_utility, minimax_value)
                         if state_utility >= beta:
+                            print("beta")
                             # The current state utility is bad enough with respect to the best already explored option
                             # along the path to the root for minimizing levels. It is already known that this state
                             # won´t be took into account in the above min level.
@@ -87,9 +107,15 @@ class AgenteAlejandroSAlejandroCTry:
         piece_owner = self.get_last_movement_owner()
         if piece_owner == self.P1:
             state_utility = self.dfs_vertical(i, j, state, piece_owner, visited_states, i, i)
+#            print(piece_owner, state_utility)
+            state_utility += self.weight[i][j]
+#            print(piece_owner, "pos:",i, j, "Weight:", state_utility)
         else:
             state_utility = self.dfs_horizontal(i, j, state, piece_owner, visited_states, j, j)
-        print("State utility for", i, ",", j, ":", state_utility)
+#            print(piece_owner, state_utility)
+            state_utility += self.weight[i][j]
+#            print(piece_owner, "pos:", i, j, "Weight:", state_utility)
+        #print("State utility for", i, ",", j, ":", state_utility)
         return state_utility
 
     # Determines the owner of the last movement for the evaluation.
