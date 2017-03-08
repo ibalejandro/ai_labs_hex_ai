@@ -24,6 +24,8 @@ class AgenteAlejandroSAlejandroCTry:
         self.current_player = 0  # There is no current_player at that moment.
         self.turnsCount = 0
         self.max_depth = 2  # It can´t be higher at the beginning due to the time constraint of 2 seconds.
+        self.enemy_movements = set()
+        self.last_enemy_movement = (-1,-1)
 
     # Returns the best action for the current state of the game.
     def get_action_to_take(self, state, current_player):
@@ -93,10 +95,15 @@ class AgenteAlejandroSAlejandroCTry:
                         # The best already explored option along the path to the root for maximizing levels is updated
                         # for the alpha-beta pruning.
                         alpha = max(alpha, state_utility)
+                elif piece_owner == self.P1 and self.turnsCount > 0:
+                    if (i, j) in self.enemy_movements:
+                        self.last_enemy_movement = (i, j)
+                        self.enemy_movements.add((i,j))
         # It happens when no other actions were available from the given state.
         if state_utility == math.inf or state_utility == -math.inf:
             state_utility = self.get_utility_from_eval_function(row_modified, column_modified, state)
 
+        print("last_enemy_movement:", self.last_enemy_movement)
         return state_utility
 
     def get_utility_from_eval_function(self, i, j, state):
