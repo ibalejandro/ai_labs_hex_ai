@@ -42,11 +42,11 @@ class AgenteAlejandroSAlejandroCTry:
                     #print("For", i, ",", j, ":", minimax_value)
                     if minimax_value > state_utility:
                         state_utility = minimax_value
-                        action = [i, j]
-                    elif minimax_value == state_utility:
-                        is_current_eval_better = (True if self.weight[i][j] > self.weight[action[0]][action[1]] else False)
-                        if is_current_eval_better:
-                            action = [i, j]
+                        action = (i, j)
+#                    elif minimax_value == state_utility:
+#                        is_current_eval_better = (True if self.weight[i][j] > self.weight[action[0]][action[1]] else False)
+#                        if is_current_eval_better:
+#                            action = (i, j)
 
         self.turnsCount += 2  # When this algorithm executes again, the current turn will be incremented by two.
         return action
@@ -106,14 +106,14 @@ class AgenteAlejandroSAlejandroCTry:
         # evaluation wins horizontally).
         piece_owner = self.get_last_movement_owner()
         if piece_owner == self.P1:
-            state_utility = self.dfs_vertical(i, j, state, piece_owner, visited_states, i, i)
-#            print(piece_owner, state_utility)
-            state_utility += self.weight[i][j]
+            state_utility = self.dfs_vertical(i, j, state, piece_owner, visited_states, i, i) \
+                            + self.count_adjacent_own_fields(i, j, state, piece_owner)
+#                            + self.weight[i][j]
 #            print(piece_owner, "pos:",i, j, "Weight:", state_utility)
         else:
-            state_utility = self.dfs_horizontal(i, j, state, piece_owner, visited_states, j, j)
-#            print(piece_owner, state_utility)
-            state_utility += self.weight[i][j]
+            state_utility = self.dfs_horizontal(i, j, state, piece_owner, visited_states, j, j) \
+                            + self.count_adjacent_own_fields(i, j, state, piece_owner)
+#                            + self.weight[i][j]
 #            print(piece_owner, "pos:", i, j, "Weight:", state_utility)
         #print("State utility for", i, ",", j, ":", state_utility)
         return state_utility
@@ -201,6 +201,24 @@ class AgenteAlejandroSAlejandroCTry:
 
         return horizontal_delta
 
+    def count_adjacent_own_fields(self, i, j, state, piece_owner):
+        adjacent_own_fields = 0
+        if 0 <= j + 1 < self.BOARD_LENGTH_AND_WIDTH and state[i][j + 1] == piece_owner:
+            adjacent_own_fields += 1
+        if 0 <= i + 1 < self.BOARD_LENGTH_AND_WIDTH and state[i + 1][j] == piece_owner:
+            adjacent_own_fields += 1
+        if 0 <= i + 1 < self.BOARD_LENGTH_AND_WIDTH and 0 <= j - 1 < self.BOARD_LENGTH_AND_WIDTH \
+                and state[i + 1][j - 1] == piece_owner:
+            adjacent_own_fields += 1
+        if 0 <= j - 1 < self.BOARD_LENGTH_AND_WIDTH and state[i][j - 1] == piece_owner:
+            adjacent_own_fields += 1
+        if 0 <= i - 1 < self.BOARD_LENGTH_AND_WIDTH and state[i - 1][j] == piece_owner:
+            adjacent_own_fields += 1
+        if 0 <= i - 1 < self.BOARD_LENGTH_AND_WIDTH and 0 <= j + 1 < self.BOARD_LENGTH_AND_WIDTH \
+                and state[i - 1][j + 1] == piece_owner:
+            adjacent_own_fields += 1
+
+        return adjacent_own_fields
 
 ## Iterative deepening.
 ## Evaluation function (Para max_depth par: sumar lo malo para mí. Para max_depth impar: sumar lo bueno para mí).
