@@ -29,27 +29,41 @@ class AgenteAlejandroSAlejandroCTry:
     def get_action_to_take(self, state, current_player):
         self.current_player = current_player
         state_utility = -math.inf  # Negative infinite because the state utility wants to be maximized.
-        # Iterates over every field on the board.
-        for i in range(0, self.BOARD_LENGTH_AND_WIDTH):
-            for j in range(0, self.BOARD_LENGTH_AND_WIDTH):
-                piece_owner = state[i][j]
-                if piece_owner == 0:  # It is a blank field.
-                    next_state = copy.deepcopy(state)
-                    next_state[i][j] = current_player  # The current state of the game is modified on that position.
-                    # The MiniMax algorithm receives the modification, the state with that modification, a 1 indicating
-                    # that one movement has already been done and the alpha and the beta values.
-                    minimax_value = self.minimax(i, j, next_state, 1, state_utility, math.inf)
-                    #print("For", i, ",", j, ":", minimax_value)
-                    if minimax_value > state_utility:
-                        state_utility = minimax_value
-                        action = (i, j)
-#                    elif minimax_value == state_utility:
-#                        is_current_eval_better = (True if self.weight[i][j] > self.weight[action[0]][action[1]] else False)
-#                        if is_current_eval_better:
-#                            action = (i, j)
 
+        if current_player == self.P1:
+            # Iterates over every field on the board vertically.
+            for j in range(0, self.BOARD_LENGTH_AND_WIDTH):
+                for i in range(0, self.BOARD_LENGTH_AND_WIDTH):
+                    print("vertical",i,j)
+                    piece_owner = state[i][j]
+                    if piece_owner == 0:  # It is a blank field.
+                        minimax_value = self.iterate_over_state(i, j, state, current_player, state_utility)
+                        print("minimax_value", minimax_value, "state utility", state_utility)
+                        if minimax_value > state_utility:
+                            state_utility = minimax_value
+                            action = (i, j)
+                            print("minimax_value > state_utility", action)
+        else:
+            # Iterates over every field on the board horizontally.
+            for i in range(0, self.BOARD_LENGTH_AND_WIDTH):
+                for j in range(0, self.BOARD_LENGTH_AND_WIDTH):
+                    print("horizontal", i, j)
+                    piece_owner = state[i][j]
+                    if piece_owner == 0:  # It is a blank field.
+                        minimax_value = self.iterate_over_state(i, j, state, current_player, state_utility)
+                        if minimax_value > state_utility:
+                            state_utility = minimax_value
+                            action = (i, j)
         self.turnsCount += 2  # When this algorithm executes again, the current turn will be incremented by two.
         return action
+
+    def iterate_over_state(self, i, j, state, current_player, state_utility):
+        next_state = copy.deepcopy(state)
+        next_state[i][j] = current_player  # The current state of the game is modified on that position.
+        # The MiniMax algorithm receives the modification, the state with that modification, a 1 indicating
+        # that one movement has already been done and the alpha and beta values.
+        minimax_value = self.minimax(i, j, next_state, 1, state_utility, math.inf)
+        return minimax_value
 
     def minimax(self, row_modified, column_modified, state, depth, alpha, beta):
         is_state_level_minimizing = depth % 2  # The odd state levels minimize.
@@ -106,16 +120,18 @@ class AgenteAlejandroSAlejandroCTry:
         # evaluation wins horizontally).
         piece_owner = self.get_last_movement_owner()
         if piece_owner == self.P1:
-            state_utility = self.dfs_vertical(i, j, state, piece_owner, visited_states, i, i) \
+            state_utility = (3 * self.dfs_vertical(i, j, state, piece_owner, visited_states, i, i)) \
+                            + (2 * self.count_virtual_connections_vertically(i, j, state, piece_owner)) \
                             + self.count_adjacent_own_fields(i, j, state, piece_owner)
 #                            + self.weight[i][j]
 #            print(piece_owner, "pos:",i, j, "Weight:", state_utility)
         else:
-            state_utility = self.dfs_horizontal(i, j, state, piece_owner, visited_states, j, j) \
+            state_utility = (3 * self.dfs_horizontal(i, j, state, piece_owner, visited_states, j, j)) \
+                            + (2 * self.count_virtual_connections_horizontally(i, j, state, piece_owner)) \
                             + self.count_adjacent_own_fields(i, j, state, piece_owner)
 #                            + self.weight[i][j]
 #            print(piece_owner, "pos:", i, j, "Weight:", state_utility)
-        #print("State utility for", i, ",", j, ":", state_utility)
+        print("State utility for", i, ",", j, ":", state_utility)
         return state_utility
 
     # Determines the owner of the last movement for the evaluation.
@@ -219,6 +235,67 @@ class AgenteAlejandroSAlejandroCTry:
             adjacent_own_fields += 1
 
         return adjacent_own_fields
+
+    def count_virtual_connections_vertically(self, i, j, state, piece_owner):
+        virtual_connections = 0
+        if 0 <= i - 2 < self.BOARD_LENGTH_AND_WIDTH and 0 <= j + 1 < self.BOARD_LENGTH_AND_WIDTH \
+                and state[i - 2][j + 1] == piece_owner:
+            virtual_connections += self.exist_virtual_connection(i, j, i - 2, j + 1, state)
+        if 0 <= i - 1 < self.BOARD_LENGTH_AND_WIDTH and 0 <= j - 1 < self.BOARD_LENGTH_AND_WIDTH \
+                and state[i - 1][j - 1] == piece_owner:
+            virtual_connections += self.exist_virtual_connection(i, j, i - 1, j - 1, state)
+        if 0 <= i + 2 < self.BOARD_LENGTH_AND_WIDTH and 0 <= j - 1 < self.BOARD_LENGTH_AND_WIDTH \
+                and state[i + 2][j - 1] == piece_owner:
+            virtual_connections += self.exist_virtual_connection(i, j, i + 2, j - 1, state)
+        if 0 <= i + 1 < self.BOARD_LENGTH_AND_WIDTH and 0 <= j + 1 < self.BOARD_LENGTH_AND_WIDTH \
+                and state[i + 1][j + 1] == piece_owner:
+            virtual_connections += self.exist_virtual_connection(i, j, i + 1, j + 1, state)
+
+        return virtual_connections
+
+    def count_virtual_connections_horizontally(self, i, j, state, piece_owner):
+        virtual_connections = 0
+        if 0 <= i - 1 < self.BOARD_LENGTH_AND_WIDTH and 0 <= j + 2 < self.BOARD_LENGTH_AND_WIDTH \
+                and state[i - 1][j + 2] == piece_owner:
+            virtual_connections += self.exist_virtual_connection(i, j, i - 1, j + 2, state)
+            print("virtual_connections with ", i - 1, j + 2, "VC", virtual_connections)
+        if 0 <= i - 1 < self.BOARD_LENGTH_AND_WIDTH and 0 <= j - 1 < self.BOARD_LENGTH_AND_WIDTH \
+                and state[i - 1][j - 1] == piece_owner:
+            virtual_connections += self.exist_virtual_connection(i, j, i - 1, j - 1, state)
+            print("virtual_connections with ", i - 1, j - 1, "VC", virtual_connections)
+        if 0 <= i + 1 < self.BOARD_LENGTH_AND_WIDTH and 0 <= j - 2 < self.BOARD_LENGTH_AND_WIDTH \
+                and state[i + 1][j - 2] == piece_owner:
+            virtual_connections += self.exist_virtual_connection(i, j, i + 1, j - 2, state)
+            print("virtual_connections with ", i + 1, j - 2, "VC", virtual_connections)
+        if 0 <= i + 1 < self.BOARD_LENGTH_AND_WIDTH and 0 <= j + 1 < self.BOARD_LENGTH_AND_WIDTH \
+                and state[i + 1][j + 1] == piece_owner:
+            virtual_connections += self.exist_virtual_connection(i, j, i + 1, j + 1, state)
+            print("virtual_connections with ", i + 1, j + 1, "VC", virtual_connections)
+        print("virtual connections:", virtual_connections, "pos", i, j)
+        return virtual_connections
+
+    def exist_virtual_connection(self, evaluating_i, evaluating_j, fix_i, fix_j, state):
+        adjacent_blank_neighbors = len(set(self.get_blank_adjacent_fields_list(evaluating_i, evaluating_j, state))
+                                       & set(self.get_blank_adjacent_fields_list(fix_i, fix_j, state)))
+        return 1 if adjacent_blank_neighbors == 2 else 0
+
+    def get_blank_adjacent_fields_list(self, i, j, state):
+        blank_adjacent_fields_list = []
+        if 0 <= j + 1 < self.BOARD_LENGTH_AND_WIDTH and state[i][j + 1] == 0:
+            blank_adjacent_fields_list.append((i, j + 1))
+        if 0 <= i + 1 < self.BOARD_LENGTH_AND_WIDTH and state[i + 1][j] == 0:
+            blank_adjacent_fields_list.append((i + 1, j))
+        if 0 <= i + 1 < self.BOARD_LENGTH_AND_WIDTH and 0 <= j - 1 < self.BOARD_LENGTH_AND_WIDTH \
+                and state[i + 1][j - 1] == 0:
+            blank_adjacent_fields_list.append((i + 1, j - 1))
+        if 0 <= j - 1 < self.BOARD_LENGTH_AND_WIDTH and state[i][j - 1] == 0:
+            blank_adjacent_fields_list.append((i, j - 1))
+        if 0 <= i - 1 < self.BOARD_LENGTH_AND_WIDTH and state[i - 1][j] == 0:
+            blank_adjacent_fields_list.append((i - 1, j))
+        if 0 <= i - 1 < self.BOARD_LENGTH_AND_WIDTH and 0 <= j + 1 < self.BOARD_LENGTH_AND_WIDTH \
+                and state[i - 1][j + 1] == 0:
+            blank_adjacent_fields_list.append((i - 1, j + 1))
+        return blank_adjacent_fields_list
 
 ## Iterative deepening.
 ## Evaluation function (Para max_depth par: sumar lo malo para mí. Para max_depth impar: sumar lo bueno para mí).
