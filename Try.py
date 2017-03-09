@@ -32,8 +32,19 @@ class AgenteAlejandroSAlejandroCTry:
 
         if current_player == self.P1:
             # Iterates over every field on the board vertically.
-            for j in range(0, self.BOARD_LENGTH_AND_WIDTH):
-                for i in range(0, self.BOARD_LENGTH_AND_WIDTH):
+            for j in range(int(round(self.BOARD_LENGTH_AND_WIDTH/2)), 0, -1):
+                for i in range(self.BOARD_LENGTH_AND_WIDTH - 1, 0, -1):
+                    print("vertical",i,j)
+                    piece_owner = state[i][j]
+                    if piece_owner == 0:  # It is a blank field.
+                        minimax_value = self.iterate_over_state(i, j, state, current_player, state_utility)
+                        print("minimax_value", minimax_value, "state utility", state_utility)
+                        if minimax_value > state_utility:
+                            state_utility = minimax_value
+                            action = (i, j)
+                            print("minimax_value > state_utility", action)
+            for j in range(int(round(self.BOARD_LENGTH_AND_WIDTH/2)) + 1, self.BOARD_LENGTH_AND_WIDTH - 1):
+                for i in range(self.BOARD_LENGTH_AND_WIDTH - 1, 0, -1):
                     print("vertical",i,j)
                     piece_owner = state[i][j]
                     if piece_owner == 0:  # It is a blank field.
@@ -45,8 +56,17 @@ class AgenteAlejandroSAlejandroCTry:
                             print("minimax_value > state_utility", action)
         else:
             # Iterates over every field on the board horizontally.
-            for i in range(0, self.BOARD_LENGTH_AND_WIDTH):
-                for j in range(0, self.BOARD_LENGTH_AND_WIDTH):
+            for i in range(self.BOARD_LENGTH_AND_WIDTH/2, 0, -1):
+                for j in range(self.BOARD_LENGTH_AND_WIDTH - 1, 0, -1):
+                    print("horizontal", i, j)
+                    piece_owner = state[i][j]
+                    if piece_owner == 0:  # It is a blank field.
+                        minimax_value = self.iterate_over_state(i, j, state, current_player, state_utility)
+                        if minimax_value > state_utility:
+                            state_utility = minimax_value
+                            action = (i, j)
+            for i in range(self.BOARD_LENGTH_AND_WIDTH/2 + 1, self.BOARD_LENGTH_AND_WIDTH - 1):
+                for j in range(self.BOARD_LENGTH_AND_WIDTH - 1, 0, -1):
                     print("horizontal", i, j)
                     piece_owner = state[i][j]
                     if piece_owner == 0:  # It is a blank field.
