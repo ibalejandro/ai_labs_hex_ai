@@ -18,43 +18,46 @@ class AgenteAlejandroSAlejandroCTry:
 
     BOARD_LENGTH_AND_WIDTH = 11
     P1 = 1
+    INCR_VALUE = 50
 
     # Constructor.
     def __init__(self):
         self.current_player = 0  # There is no current_player at that moment.
-        self.turnsCount = 0
+        self.turns_count = 0
         self.max_depth = 2  # It can´t be higher at the beginning due to the time constraint of 2 seconds.
 
     # Returns the best action for the current state of the game.
     def get_action_to_take(self, state, current_player):
         self.current_player = current_player
+        if self.turns_count == self.INCR_VALUE:
+            self.max_depth += 1
         state_utility = -math.inf  # Negative infinite because the state utility wants to be maximized.
 
         if current_player == self.P1:
             # Iterates over every field on the board vertically.
             for j in range(0, self.BOARD_LENGTH_AND_WIDTH):
                 for i in range(0, self.BOARD_LENGTH_AND_WIDTH):
-                    print("vertical",i,j)
+#                    print("vertical",i,j)
                     piece_owner = state[i][j]
                     if piece_owner == 0:  # It is a blank field.
                         minimax_value = self.iterate_over_state(i, j, state, current_player, state_utility)
-                        print("minimax_value", minimax_value, "state utility", state_utility)
+#                        print("minimax_value", minimax_value, "state utility", state_utility)
                         if minimax_value > state_utility:
                             state_utility = minimax_value
                             action = (i, j)
-                            print("minimax_value > state_utility", action)
+#                            print("minimax_value > state_utility", action)
         else:
             # Iterates over every field on the board horizontally.
             for i in range(0, self.BOARD_LENGTH_AND_WIDTH):
                 for j in range(0, self.BOARD_LENGTH_AND_WIDTH):
-                    print("horizontal", i, j)
+#                    print("horizontal", i, j)
                     piece_owner = state[i][j]
                     if piece_owner == 0:  # It is a blank field.
                         minimax_value = self.iterate_over_state(i, j, state, current_player, state_utility)
                         if minimax_value > state_utility:
                             state_utility = minimax_value
                             action = (i, j)
-        self.turnsCount += 2  # When this algorithm executes again, the current turn will be incremented by two.
+        self.turns_count += 2  # When this algorithm executes again, the current turn will be incremented by two.
         return action
 
     def iterate_over_state(self, i, j, state, current_player, state_utility):
@@ -99,7 +102,7 @@ class AgenteAlejandroSAlejandroCTry:
                     else:
                         state_utility = max(state_utility, minimax_value)
                         if state_utility >= beta:
-                            print("beta")
+#                            print("beta")
                             # The current state utility is bad enough with respect to the best already explored option
                             # along the path to the root for minimizing levels. It is already known that this state
                             # won´t be took into account in the above min level.
@@ -131,7 +134,7 @@ class AgenteAlejandroSAlejandroCTry:
                             + self.count_adjacent_own_fields(i, j, state, piece_owner)
 #                            + self.weight[i][j]
 #            print(piece_owner, "pos:", i, j, "Weight:", state_utility)
-        print("State utility for", i, ",", j, ":", state_utility)
+#        print("State utility for", i, ",", j, ":", state_utility)
         return state_utility
 
     # Determines the owner of the last movement for the evaluation.
@@ -258,20 +261,20 @@ class AgenteAlejandroSAlejandroCTry:
         if 0 <= i - 1 < self.BOARD_LENGTH_AND_WIDTH and 0 <= j + 2 < self.BOARD_LENGTH_AND_WIDTH \
                 and state[i - 1][j + 2] == piece_owner:
             virtual_connections += self.exist_virtual_connection(i, j, i - 1, j + 2, state)
-            print("virtual_connections with ", i - 1, j + 2, "VC", virtual_connections)
+#            print("virtual_connections with ", i - 1, j + 2, "VC", virtual_connections)
         if 0 <= i - 1 < self.BOARD_LENGTH_AND_WIDTH and 0 <= j - 1 < self.BOARD_LENGTH_AND_WIDTH \
                 and state[i - 1][j - 1] == piece_owner:
             virtual_connections += self.exist_virtual_connection(i, j, i - 1, j - 1, state)
-            print("virtual_connections with ", i - 1, j - 1, "VC", virtual_connections)
+#            print("virtual_connections with ", i - 1, j - 1, "VC", virtual_connections)
         if 0 <= i + 1 < self.BOARD_LENGTH_AND_WIDTH and 0 <= j - 2 < self.BOARD_LENGTH_AND_WIDTH \
                 and state[i + 1][j - 2] == piece_owner:
             virtual_connections += self.exist_virtual_connection(i, j, i + 1, j - 2, state)
-            print("virtual_connections with ", i + 1, j - 2, "VC", virtual_connections)
+#            print("virtual_connections with ", i + 1, j - 2, "VC", virtual_connections)
         if 0 <= i + 1 < self.BOARD_LENGTH_AND_WIDTH and 0 <= j + 1 < self.BOARD_LENGTH_AND_WIDTH \
                 and state[i + 1][j + 1] == piece_owner:
             virtual_connections += self.exist_virtual_connection(i, j, i + 1, j + 1, state)
-            print("virtual_connections with ", i + 1, j + 1, "VC", virtual_connections)
-        print("virtual connections:", virtual_connections, "pos", i, j)
+#            print("virtual_connections with ", i + 1, j + 1, "VC", virtual_connections)
+#        print("virtual connections:", virtual_connections, "pos", i, j)
         return virtual_connections
 
     def exist_virtual_connection(self, evaluating_i, evaluating_j, fix_i, fix_j, state):
@@ -298,5 +301,3 @@ class AgenteAlejandroSAlejandroCTry:
         return blank_adjacent_fields_list
 
 ## Iterative deepening.
-## Evaluation function (Para max_depth par: sumar lo malo para mí. Para max_depth impar: sumar lo bueno para mí).
-## Virtual connections.
