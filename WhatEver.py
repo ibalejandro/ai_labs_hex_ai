@@ -99,5 +99,5 @@ init_state = \
 
 action = AgenteAlejandroSAlejandroC()
 start = time.time()
-print(action.get_action_to_take_main(init_state, 1))
+print(action.get_action_to_take(init_state, 1))
 print(time.time() - start)

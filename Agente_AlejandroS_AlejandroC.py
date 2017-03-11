@@ -5,21 +5,23 @@ from multiprocessing import Process, Manager
 
 class AgenteAlejandroSAlejandroC:
 
-    BOARD_LENGTH_AND_WIDTH = 11
-    CENTRAL_ROW_COLUMN = 5
-    P1 = 1
-    INCR_VALUE_FOR_MD_4 = 78
-    INCR_VALUE_FOR_MD_5 = 100
+    BOARD_LENGTH_AND_WIDTH = 11  # Size of the board
+    CENTRAL_ROW_COLUMN = 5  # Center point of the board
+    P1 = 1  # Constant to represent player one
+    INCR_VALUE_FOR_MD_4 = 78  # Limit of turns to determine increment depth to 4
+    INCR_VALUE_FOR_MD_5 = 100  # Limit of turns to determine increment depth to 5
+    # Array to define preference position when the evaluation was tie
     DISTANCE_TO_OPTIMAL_PATH = [0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0]
-    TIME_CONSTRAINT = 4.9
+    TIME_CONSTRAINT = 4.9  # Constant that define the timeout to return the action have been taken
 
     # Constructor.
     def __init__(self):
         self.current_player = 0  # There is no current_player at that moment.
-        self.turns_count = 0
+        self.turns_count = 0  # Variable to count the turns of the game
         self.max_depth = 3  # It can´t be higher at the beginning due to the time constraint of 5 seconds.
 
-    def get_action_to_take_main(self, state, current_player):
+
+    def get_action_to_take(self, state, current_player):
         result_dict = Manager().dict()
 
         if self.turns_count == self.INCR_VALUE_FOR_MD_4:
@@ -27,19 +29,18 @@ class AgenteAlejandroSAlejandroC:
         elif self.turns_count == self.INCR_VALUE_FOR_MD_5:
             self.max_depth += 1
 
-        process = Process(target=self.get_action_to_take, name="get_action_to_take",
+        process = Process(target=self.evaluate_state_with_player, name="evaluate_state_with_player",
                           args=(state, current_player, result_dict))
         process.start()
         process.join(self.TIME_CONSTRAINT)
         if process.is_alive():
-            print("Process was alive and thus killed.")
             process.terminate()
             process.join()
         self.turns_count += 2  # When this algorithm executes again, the current turn will be incremented by two.
         return result_dict["action"]
 
     # Returns the best action for the current state of the game.
-    def get_action_to_take(self, state, current_player, result_dict):
+    def evaluate_state_with_player(self, state, current_player, result_dict):
         self.current_player = current_player
         state_utility = -math.inf  # Negative infinite because the state utility wants to be maximized.
 
@@ -52,12 +53,10 @@ class AgenteAlejandroSAlejandroC:
                         if "action" not in result_dict:
                             result_dict["action"] = [i, j]
                         minimax_value = self.iterate_over_state(i, j, state, current_player, state_utility)
-#                        print("minimax_value", minimax_value, "state utility", state_utility)
                         if minimax_value > state_utility:
                             state_utility = minimax_value
                             action = [i, j]
                             result_dict["action"] = action
-                            # print("minimax_value > state_utility", action)
                         elif minimax_value == state_utility:
                             if self.DISTANCE_TO_OPTIMAL_PATH[j] > self.DISTANCE_TO_OPTIMAL_PATH[action[1]]:
                                 action = [i, j]
@@ -66,7 +65,6 @@ class AgenteAlejandroSAlejandroC:
             # Iterates over every field on the board horizontally.
             for i in range(0, self.BOARD_LENGTH_AND_WIDTH):
                 for j in range(0, self.BOARD_LENGTH_AND_WIDTH):
-#                    print("horizontal", i, j)
                     piece_owner = state[i][j]
                     if piece_owner == 0:  # It is a blank field.
                         if "action" not in result_dict:
@@ -76,7 +74,6 @@ class AgenteAlejandroSAlejandroC:
                             state_utility = minimax_value
                             action = [i, j]
                             result_dict["action"] = action
-                            # print("minimax_value > state_utility", action)
                         elif minimax_value == state_utility:
                             if self.DISTANCE_TO_OPTIMAL_PATH[i] > self.DISTANCE_TO_OPTIMAL_PATH[action[0]]:
                                 action = [i, j]
@@ -96,7 +93,6 @@ class AgenteAlejandroSAlejandroC:
 
         # If the state's depth is at the limit, the utility is calculated using the evaluation function.
         if depth == self.max_depth:
-#            print("depth", depth)
             return self.get_utility_from_eval_function(row_modified, column_modified, state)
 
         # Iterates over every field on the board.
@@ -113,7 +109,6 @@ class AgenteAlejandroSAlejandroC:
                     if is_state_level_minimizing:
                         state_utility = min(state_utility, minimax_value)
                         if state_utility <= alpha:
-#                            print("alpha")
                             # The current state utility is bad enough with respect to the best already explored option
                             # along the path to the root for maximizing levels. It is already known that this state
                             # won´t be took into account in the above max level.
@@ -124,7 +119,6 @@ class AgenteAlejandroSAlejandroC:
                     else:
                         state_utility = max(state_utility, minimax_value)
                         if state_utility >= beta:
-#                            print("beta")
                             # The current state utility is bad enough with respect to the best already explored option
                             # along the path to the root for minimizing levels. It is already known that this state
                             # won´t be took into account in the above min level.
@@ -154,7 +148,6 @@ class AgenteAlejandroSAlejandroC:
                             + (2 * self.count_virtual_connections_horizontally(i, j, state, piece_owner)) \
                             + self.count_adjacent_own_fields(i, j, state, piece_owner)
 
-#        print("State utility for", i, ",", j, ":", state_utility)
         return state_utility
 
     # Determines the owner of the last movement for the evaluation.
@@ -281,20 +274,15 @@ class AgenteAlejandroSAlejandroC:
         if 0 <= i - 1 < self.BOARD_LENGTH_AND_WIDTH and 0 <= j + 2 < self.BOARD_LENGTH_AND_WIDTH \
                 and state[i - 1][j + 2] == piece_owner:
             virtual_connections += self.exist_virtual_connection(i, j, i - 1, j + 2, state)
-#            print("virtual_connections with ", i - 1, j + 2, "VC", virtual_connections)
         if 0 <= i - 1 < self.BOARD_LENGTH_AND_WIDTH and 0 <= j - 1 < self.BOARD_LENGTH_AND_WIDTH \
                 and state[i - 1][j - 1] == piece_owner:
             virtual_connections += self.exist_virtual_connection(i, j, i - 1, j - 1, state)
-#            print("virtual_connections with ", i - 1, j - 1, "VC", virtual_connections)
         if 0 <= i + 1 < self.BOARD_LENGTH_AND_WIDTH and 0 <= j - 2 < self.BOARD_LENGTH_AND_WIDTH \
                 and state[i + 1][j - 2] == piece_owner:
             virtual_connections += self.exist_virtual_connection(i, j, i + 1, j - 2, state)
-#            print("virtual_connections with ", i + 1, j - 2, "VC", virtual_connections)
         if 0 <= i + 1 < self.BOARD_LENGTH_AND_WIDTH and 0 <= j + 1 < self.BOARD_LENGTH_AND_WIDTH \
                 and state[i + 1][j + 1] == piece_owner:
             virtual_connections += self.exist_virtual_connection(i, j, i + 1, j + 1, state)
-#            print("virtual_connections with ", i + 1, j + 1, "VC", virtual_connections)
-#        print("virtual connections:", virtual_connections, "pos", i, j)
         return virtual_connections
 
     def exist_virtual_connection(self, evaluating_i, evaluating_j, fix_i, fix_j, state):
