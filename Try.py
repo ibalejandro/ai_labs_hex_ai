@@ -3,22 +3,12 @@ import copy
 
 
 class AgenteAlejandroSAlejandroCTry:
-    weight = \
-        [[0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0],
-         [1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1],
-         [2, 3, 4, 5, 6, 7, 6, 5, 4, 3, 2],
-         [3, 4, 5, 6, 7, 8, 7, 6, 5, 4, 3],
-         [4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4],
-         [5, 6, 7, 8, 9, 10, 9, 8, 7, 6, 5],
-         [4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4],
-         [3, 4, 5, 6, 7, 8, 7, 6, 5, 4, 3],
-         [2, 3, 4, 5, 6, 7, 6, 5, 4, 3, 2],
-         [1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1],
-         [0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0]]
 
     BOARD_LENGTH_AND_WIDTH = 11
+    CENTRAL_ROW_COLUMN = 5
     P1 = 1
     INCR_VALUE = 50
+    DISTANCE_TO_OPTIMAL_PATH = [0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0]
 
     # Constructor.
     def __init__(self):
@@ -126,14 +116,14 @@ class AgenteAlejandroSAlejandroCTry:
             state_utility = (3 * self.dfs_vertical(i, j, state, piece_owner, visited_states, i, i)) \
                             + (2 * self.count_virtual_connections_vertically(i, j, state, piece_owner)) \
                             + self.count_adjacent_own_fields(i, j, state, piece_owner)
-#                            + self.weight[i][j]
-#            print(piece_owner, "pos:",i, j, "Weight:", state_utility)
+                            # self.DISTANCE_TO_OPTIMAL_PATH[j]
+
         else:
             state_utility = (3 * self.dfs_horizontal(i, j, state, piece_owner, visited_states, j, j)) \
                             + (2 * self.count_virtual_connections_horizontally(i, j, state, piece_owner)) \
                             + self.count_adjacent_own_fields(i, j, state, piece_owner)
-#                            + self.weight[i][j]
-#            print(piece_owner, "pos:", i, j, "Weight:", state_utility)
+                            # + self.DISTANCE_TO_OPTIMAL_PATH[i]
+
 #        print("State utility for", i, ",", j, ":", state_utility)
         return state_utility
 
@@ -302,4 +292,3 @@ class AgenteAlejandroSAlejandroCTry:
 
 ## Iterative deepening.
 ## Constraint time.
-## Difference to the central row or column.
