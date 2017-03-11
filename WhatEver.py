@@ -4,7 +4,7 @@ import time
 init_state = \
     [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -34,5 +34,5 @@ init_state = \
 
 action = AgenteAlejandroSAlejandroCTry()
 start = time.time()
-print(action.get_action_to_take(init_state, 1))
+print(action.get_action_to_take_main(init_state, 2))
 print(time.time() - start)

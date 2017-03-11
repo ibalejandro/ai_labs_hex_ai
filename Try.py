@@ -1,5 +1,6 @@
 import math
 import copy
+from multiprocessing import Process, Manager
 
 
 class AgenteAlejandroSAlejandroCTry:
@@ -9,6 +10,7 @@ class AgenteAlejandroSAlejandroCTry:
     P1 = 1
     INCR_VALUE = 50
     DISTANCE_TO_OPTIMAL_PATH = [0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0]
+    TIME_CONSTRAINT = 4.5
 
     # Constructor.
     def __init__(self):
@@ -16,11 +18,26 @@ class AgenteAlejandroSAlejandroCTry:
         self.turns_count = 0
         self.max_depth = 3  # It can´t be higher at the beginning due to the time constraint of 5 seconds.
 
-    # Returns the best action for the current state of the game.
-    def get_action_to_take(self, state, current_player):
-        self.current_player = current_player
+    def get_action_to_take_main(self, state, current_player):
+        result_dict = Manager().dict()
+
         if self.turns_count == self.INCR_VALUE:
             self.max_depth += 1
+
+        process = Process(target=self.get_action_to_take, name="get_action_to_take",
+                          args=(state, current_player, result_dict))
+        process.start()
+        process.join(self.TIME_CONSTRAINT)
+        if process.is_alive():
+            print("Process was alive and thus killed.")
+            process.terminate()
+            process.join()
+        self.turns_count += 2  # When this algorithm executes again, the current turn will be incremented by two.
+        return result_dict["action"]
+
+    # Returns the best action for the current state of the game.
+    def get_action_to_take(self, state, current_player, result_dict):
+        self.current_player = current_player
         state_utility = -math.inf  # Negative infinite because the state utility wants to be maximized.
 
         if current_player == self.P1:
@@ -34,8 +51,13 @@ class AgenteAlejandroSAlejandroCTry:
 #                        print("minimax_value", minimax_value, "state utility", state_utility)
                         if minimax_value > state_utility:
                             state_utility = minimax_value
-                            action = (i, j)
-#                            print("minimax_value > state_utility", action)
+                            action = [i, j]
+                            result_dict["action"] = action
+                            # print("minimax_value > state_utility", action)
+                        elif minimax_value == state_utility:
+                            if self.DISTANCE_TO_OPTIMAL_PATH[j] > self.DISTANCE_TO_OPTIMAL_PATH[action[1]]:
+                                action = [i, j]
+                                result_dict["action"] = action
         else:
             # Iterates over every field on the board horizontally.
             for i in range(0, self.BOARD_LENGTH_AND_WIDTH):
@@ -46,9 +68,13 @@ class AgenteAlejandroSAlejandroCTry:
                         minimax_value = self.iterate_over_state(i, j, state, current_player, state_utility)
                         if minimax_value > state_utility:
                             state_utility = minimax_value
-                            action = (i, j)
-        self.turns_count += 2  # When this algorithm executes again, the current turn will be incremented by two.
-        return action
+                            action = [i, j]
+                            result_dict["action"] = action
+                            # print("minimax_value > state_utility", action)
+                        elif minimax_value == state_utility:
+                            if self.DISTANCE_TO_OPTIMAL_PATH[i] > self.DISTANCE_TO_OPTIMAL_PATH[action[0]]:
+                                action = [i, j]
+                                result_dict["action"] = action
 
     def iterate_over_state(self, i, j, state, current_player, state_utility):
         next_state = copy.deepcopy(state)
@@ -116,13 +142,13 @@ class AgenteAlejandroSAlejandroCTry:
             state_utility = (3 * self.dfs_vertical(i, j, state, piece_owner, visited_states, i, i)) \
                             + (2 * self.count_virtual_connections_vertically(i, j, state, piece_owner)) \
                             + self.count_adjacent_own_fields(i, j, state, piece_owner)
-                            # self.DISTANCE_TO_OPTIMAL_PATH[j]
+                            #+ self.DISTANCE_TO_OPTIMAL_PATH[j]
 
         else:
             state_utility = (3 * self.dfs_horizontal(i, j, state, piece_owner, visited_states, j, j)) \
                             + (2 * self.count_virtual_connections_horizontally(i, j, state, piece_owner)) \
                             + self.count_adjacent_own_fields(i, j, state, piece_owner)
-                            # + self.DISTANCE_TO_OPTIMAL_PATH[i]
+                            #+ self.DISTANCE_TO_OPTIMAL_PATH[i]
 
 #        print("State utility for", i, ",", j, ":", state_utility)
         return state_utility

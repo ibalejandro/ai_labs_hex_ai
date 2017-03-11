@@ -2,8 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9e06b037-e1f7-4269-93d3-1555cbb3aab2" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/hex_mathv1.ipynb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/Hex_AI.iml" afterPath="$PROJECT_DIR$/.idea/Hex_AI.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Try.py" afterPath="$PROJECT_DIR$/Try.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WhatEver.py" afterPath="$PROJECT_DIR$/WhatEver.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hex_math.ipynb" afterPath="$PROJECT_DIR$/hex_math.ipynb" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -15,11 +19,12 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/ai_labs_hex_ai$Benchmark.coverage" NAME="Benchmark Coverage Results" MODIFIED="1489103525686" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Hex_AI$Agente_AlejandroS_AlejandroC.coverage" NAME="Agente_AlejandroS_AlejandroC Coverage Results" MODIFIED="1487898134268" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Hex_AI$WhatEver.coverage" NAME="WhatEver Coverage Results" MODIFIED="1489241232178" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/ai_labs_hex_ai$WhatEver.coverage" NAME="WhatEver Coverage Results" MODIFIED="1489111189186" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ai_labs_hex_ai$Threading.coverage" NAME="Threading Coverage Results" MODIFIED="1489246215712" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ai_labs_hex_ai$WhatEver.coverage" NAME="WhatEver Coverage Results" MODIFIED="1489251673206" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Hex_AI$MiniMax.coverage" NAME="MiniMax Coverage Results" MODIFIED="1488054011977" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ai_labs_hex_ai$MiniMax.coverage" NAME="MiniMax Coverage Results" MODIFIED="1488411166463" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Hex_AI$Agente_AlejandroS_AlejandroC.coverage" NAME="Agente_AlejandroS_AlejandroC Coverage Results" MODIFIED="1487898134268" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Hex_AI$WhatEver.coverage" NAME="WhatEver Coverage Results" MODIFIED="1489241232178" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -38,21 +43,35 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="WhatEver.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/WhatEver.py">
+      <file leaf-file-name="Try.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Try.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="6" column="39" lean-forward="true" selection-start-line="6" selection-start-column="39" selection-end-line="6" selection-end-column="39" />
-              <folding />
+            <state relative-caret-position="432">
+              <caret line="18" column="27" lean-forward="false" selection-start-line="18" selection-start-column="27" selection-end-line="18" selection-end-column="27" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Try.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Try.py">
+      <file leaf-file-name="Threading.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Threading.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1725">
-              <caret line="117" column="86" lean-forward="false" selection-start-line="117" selection-start-column="86" selection-end-line="117" selection-end-column="86" />
+            <state relative-caret-position="384">
+              <caret line="16" column="10" lean-forward="false" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="10" />
+              <folding>
+                <element signature="e#0#27#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WhatEver.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/WhatEver.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="1" column="11" lean-forward="false" selection-start-line="1" selection-start-column="11" selection-end-line="1" selection-end-column="11" />
               <folding />
             </state>
           </provider>
@@ -62,7 +81,17 @@
         <entry file="file://$PROJECT_DIR$/hex_math.ipynb">
           <provider selected="true" editor-type-id="ipnb-editor">
             <state>
-              <selected id="2" />
+              <selected id="0" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Agente_AlejandroS_AlejandroC.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Agente_AlejandroS_AlejandroC.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="6" column="22" lean-forward="false" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="22" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -78,12 +107,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>current_player</find>
-      <find>pl</find>
-      <find>agente</find>
-      <find>Agente_AlejandroS_AlejandroC</find>
-      <find>get_action_to_take</find>
-      <find>random</find>
       <find>Pos1Dto2D</find>
       <find>dfs_horizontal</find>
       <find>minimax</find>
@@ -92,7 +115,6 @@
       <find>lugar</find>
       <find>lugares</find>
       <find>Pos2Dto1D</find>
-      <find>action</find>
       <find>count_adjacent_own_fields</find>
       <find>weight</find>
       <find>state_utility</find>
@@ -100,14 +122,21 @@
       <find>virtual connections: 2</find>
       <find>pos 5 5</find>
       <find>is_max_depth_odd</find>
-      <find>max_depth</find>
-      <find>print</find>
       <find>update_max_depth(</find>
       <find>glob</find>
-      <find>turns_count</find>
       <find>turnsCount</find>
       <find>secon</find>
       <find>time</find>
+      <find>print</find>
+      <find>DISTANCE_TO_OPTIMAL_PATH</find>
+      <find>max_depth</find>
+      <find>multiprocessing</find>
+      <find>acti</find>
+      <find>action</find>
+      <find>proce</find>
+      <find>self.current_player</find>
+      <find>turns_count</find>
+      <find>self.max_depth</find>
     </findStrings>
     <replaceStrings>
       <replace>#print</replace>
@@ -125,8 +154,9 @@
         <option value="/code.py" />
         <option value="$PROJECT_DIR$/Agente_AlejoS_AlejoC.py" />
         <option value="$PROJECT_DIR$/Benchmark.py" />
-        <option value="$PROJECT_DIR$/WhatEver.py" />
         <option value="$PROJECT_DIR$/hex_math.ipynb" />
+        <option value="$PROJECT_DIR$/Threading.py" />
+        <option value="$PROJECT_DIR$/WhatEver.py" />
         <option value="$PROJECT_DIR$/Try.py" />
       </list>
     </option>
@@ -138,8 +168,9 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="width" value="1280" />
-    <option name="height" value="800" />
+    <option name="y" value="23" />
+    <option name="width" value="2480" />
+    <option name="height" value="1417" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -156,22 +187,22 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Hex_AI" />
+              <option name="myItemId" value="ai_labs_hex_ai" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Hex_AI" />
+              <option name="myItemId" value="ai_labs_hex_ai" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -181,7 +212,6 @@
     <property name="nodejs_interpreter_path" value="/usr/local/bin/node" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
-    <property name="FullScreen" value="true" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -260,6 +290,24 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
+      <option name="SDK_HOME" value="/Library/Frameworks/Python.framework/Versions/3.6/bin/python3.6" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Hex_AI" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/WhatEver.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Threading" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -267,7 +315,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="Hex_AI" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/WhatEver.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Threading.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -486,18 +534,20 @@
       <option name="USE_KEYWORD" value="false" />
       <method />
     </configuration>
-    <list size="4">
+    <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.Agente_AlejandroS_AlejandroC" />
       <item index="1" class="java.lang.String" itemvalue="Python.MiniMax" />
       <item index="2" class="java.lang.String" itemvalue="Python.Benchmark" />
       <item index="3" class="java.lang.String" itemvalue="Python.WhatEver" />
+      <item index="4" class="java.lang.String" itemvalue="Python.Threading" />
     </list>
     <recent_temporary>
-      <list size="4">
+      <list size="5">
         <item index="0" class="java.lang.String" itemvalue="Python.WhatEver" />
-        <item index="1" class="java.lang.String" itemvalue="Python.Benchmark" />
-        <item index="2" class="java.lang.String" itemvalue="Python.MiniMax" />
-        <item index="3" class="java.lang.String" itemvalue="Python.Agente_AlejandroS_AlejandroC" />
+        <item index="1" class="java.lang.String" itemvalue="Python.Threading" />
+        <item index="2" class="java.lang.String" itemvalue="Python.Benchmark" />
+        <item index="3" class="java.lang.String" itemvalue="Python.MiniMax" />
+        <item index="4" class="java.lang.String" itemvalue="Python.Agente_AlejandroS_AlejandroC" />
       </list>
     </recent_temporary>
   </component>
@@ -524,16 +574,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1280" height="800" extended-state="0" />
+    <frame x="0" y="23" width="2480" height="1417" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18359375" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1923708" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32981133" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32981133" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32981133" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30411687" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31320754" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934928" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -558,18 +608,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Try.py</url>
-          <line>9</line>
+          <line>10</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Try.py</url>
-          <line>15</line>
+          <line>17</line>
           <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Try.py</url>
-          <line>21</line>
-          <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
       <option name="time" value="13" />
@@ -577,7 +622,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/hex_mathv1.ipynb" />
     <entry file="file://$PROJECT_DIR$/Agente_AlejoS_AlejoC.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
@@ -804,13 +848,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/hex_mathv2.ipynb" />
-    <entry file="file://$PROJECT_DIR$/Agente_AlejandroS_AlejandroC.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="48">
-          <caret line="3" column="12" lean-forward="false" selection-start-line="3" selection-start-column="12" selection-end-line="3" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Benchmark.py" />
     <entry file="file://$PROJECT_DIR$/MiniMax.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -819,26 +856,46 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Agente_AlejandroS_AlejandroC.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="6" column="22" lean-forward="false" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/WhatEver.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="6" column="39" lean-forward="true" selection-start-line="6" selection-start-column="39" selection-end-line="6" selection-end-column="39" />
+        <state relative-caret-position="0">
+          <caret line="1" column="11" lean-forward="false" selection-start-line="1" selection-start-column="11" selection-end-line="1" selection-end-column="11" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Threading.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="384">
+          <caret line="16" column="10" lean-forward="false" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="10" />
+          <folding>
+            <element signature="e#0#27#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/hex_math.ipynb">
       <provider selected="true" editor-type-id="ipnb-editor">
         <state>
-          <selected id="2" />
+          <selected id="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Try.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1725">
-          <caret line="117" column="86" lean-forward="false" selection-start-line="117" selection-start-column="86" selection-end-line="117" selection-end-column="86" />
-          <folding />
+        <state relative-caret-position="432">
+          <caret line="18" column="27" lean-forward="false" selection-start-line="18" selection-start-column="27" selection-end-line="18" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
