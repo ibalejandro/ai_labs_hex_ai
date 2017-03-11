@@ -8,9 +8,10 @@ class AgenteAlejandroSAlejandroCTry:
     BOARD_LENGTH_AND_WIDTH = 11
     CENTRAL_ROW_COLUMN = 5
     P1 = 1
-    INCR_VALUE = 50
+    INCR_VALUE_FOR_MD_4 = 78
+    INCR_VALUE_FOR_MD_5 = 100
     DISTANCE_TO_OPTIMAL_PATH = [0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0]
-    TIME_CONSTRAINT = 4.5
+    TIME_CONSTRAINT = 4.9
 
     # Constructor.
     def __init__(self):
@@ -21,7 +22,9 @@ class AgenteAlejandroSAlejandroCTry:
     def get_action_to_take_main(self, state, current_player):
         result_dict = Manager().dict()
 
-        if self.turns_count == self.INCR_VALUE:
+        if self.turns_count == self.INCR_VALUE_FOR_MD_4:
+            self.max_depth += 1
+        elif self.turns_count == self.INCR_VALUE_FOR_MD_5:
             self.max_depth += 1
 
         process = Process(target=self.get_action_to_take, name="get_action_to_take",
@@ -44,9 +47,10 @@ class AgenteAlejandroSAlejandroCTry:
             # Iterates over every field on the board vertically.
             for j in range(0, self.BOARD_LENGTH_AND_WIDTH):
                 for i in range(0, self.BOARD_LENGTH_AND_WIDTH):
-#                    print("vertical",i,j)
                     piece_owner = state[i][j]
                     if piece_owner == 0:  # It is a blank field.
+                        if "action" not in result_dict:
+                            result_dict["action"] = [i, j]
                         minimax_value = self.iterate_over_state(i, j, state, current_player, state_utility)
 #                        print("minimax_value", minimax_value, "state utility", state_utility)
                         if minimax_value > state_utility:
@@ -65,6 +69,8 @@ class AgenteAlejandroSAlejandroCTry:
 #                    print("horizontal", i, j)
                     piece_owner = state[i][j]
                     if piece_owner == 0:  # It is a blank field.
+                        if "action" not in result_dict:
+                            result_dict["action"] = [i, j]
                         minimax_value = self.iterate_over_state(i, j, state, current_player, state_utility)
                         if minimax_value > state_utility:
                             state_utility = minimax_value
@@ -142,13 +148,11 @@ class AgenteAlejandroSAlejandroCTry:
             state_utility = (3 * self.dfs_vertical(i, j, state, piece_owner, visited_states, i, i)) \
                             + (2 * self.count_virtual_connections_vertically(i, j, state, piece_owner)) \
                             + self.count_adjacent_own_fields(i, j, state, piece_owner)
-                            #+ self.DISTANCE_TO_OPTIMAL_PATH[j]
 
         else:
             state_utility = (3 * self.dfs_horizontal(i, j, state, piece_owner, visited_states, j, j)) \
                             + (2 * self.count_virtual_connections_horizontally(i, j, state, piece_owner)) \
                             + self.count_adjacent_own_fields(i, j, state, piece_owner)
-                            #+ self.DISTANCE_TO_OPTIMAL_PATH[i]
 
 #        print("State utility for", i, ",", j, ":", state_utility)
         return state_utility
@@ -315,6 +319,3 @@ class AgenteAlejandroSAlejandroCTry:
                 and state[i - 1][j + 1] == 0:
             blank_adjacent_fields_list.append((i - 1, j + 1))
         return blank_adjacent_fields_list
-
-## Iterative deepening.
-## Constraint time.
