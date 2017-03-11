@@ -1,4 +1,4 @@
-from Try import AgenteAlejandroSAlejandroCTry
+from Agente_AlejandroS_AlejandroC import AgenteAlejandroSAlejandroC
 import time
 
 init_state = \
@@ -97,7 +97,7 @@ init_state = \
 #      [0, 0, 0],
 #      [0, 0, 2]]
 
-action = AgenteAlejandroSAlejandroCTry()
+action = AgenteAlejandroSAlejandroC()
 start = time.time()
 print(action.get_action_to_take_main(init_state, 1))
 print(time.time() - start)
