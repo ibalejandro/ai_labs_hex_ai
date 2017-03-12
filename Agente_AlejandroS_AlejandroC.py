@@ -5,25 +5,25 @@ from multiprocessing import Process, Manager
 
 class AgenteAlejandroSAlejandroC:
 
-    BOARD_LENGTH_AND_WIDTH = 11  # Size of the board
-    CENTRAL_ROW_COLUMN = 5  # Center point of the board
-    P1 = 1  # Constant to represent player one
-    INCR_VALUE_FOR_MD_4 = 78  # Limit of turns to determine increment depth to 4
-    INCR_VALUE_FOR_MD_5 = 100  # Limit of turns to determine increment depth to 5
-    # Array to define preference position when the evaluation was tie
+    BOARD_LENGTH_AND_WIDTH = 11  # Size of the board.
+    CENTRAL_ROW_COLUMN = 5  # Center point of the board.
+    P1 = 1  # Constant to represent player one.
+    INCR_VALUE_FOR_MD_4 = 78  # Turns to determine increment to max depth 4.
+    INCR_VALUE_FOR_MD_5 = 100  # Turns to determine increment to max depth 5.
+    # Array to define preference position when the evaluation was a tie.
     DISTANCE_TO_OPTIMAL_PATH = [0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0]
-    TIME_CONSTRAINT = 4.9  # Constant that define the timeout to return the action have been taken
+    TIME_CONSTRAINT = 4.9  # Constant that defines the timeout to return the action of the agent.
 
     # Constructor.
     def __init__(self):
-        self.current_player = 0  # There is no current_player at that moment.
-        self.turns_count = 0  # Variable to count the turns of the game
+        self.current_player = 0  # There is no current_player when the class is instantiated.
+        self.turns_count = 0  # Variable to count the turns of the game.
         self.max_depth = 3  # It can´t be higher at the beginning due to the time constraint of 5 seconds.
 
-
     def get_action_to_take(self, state, current_player):
-        result_dict = Manager().dict()
+        result_dict = Manager().dict()  # The dictionary which will contain the action to take.
 
+        # Conditionals to increment the max depth on a certain time of the game.
         if self.turns_count == self.INCR_VALUE_FOR_MD_4:
             self.max_depth += 1
         elif self.turns_count == self.INCR_VALUE_FOR_MD_5:
@@ -31,13 +31,16 @@ class AgenteAlejandroSAlejandroC:
 
         process = Process(target=self.evaluate_state_with_player, name="evaluate_state_with_player",
                           args=(state, current_player, result_dict))
-        process.start()
+        process.start()  # Invokes the evaluate_state_with_player() method.
+        # Sets a timeout to the evaluate_state_with_player() method. When the time is out, the method should return the
+        # best action found until that moment.
         process.join(self.TIME_CONSTRAINT)
         if process.is_alive():
+            # The evaluate_state_with_player() method is terminated if it was still alive.
             process.terminate()
             process.join()
         self.turns_count += 2  # When this algorithm executes again, the current turn will be incremented by two.
-        return result_dict["action"]
+        return result_dict["action"]  # The "action" key contains the result to be returned.
 
     # Returns the best action for the current state of the game.
     def evaluate_state_with_player(self, state, current_player, result_dict):
@@ -51,16 +54,17 @@ class AgenteAlejandroSAlejandroC:
                     piece_owner = state[i][j]
                     if piece_owner == 0:  # It is a blank field.
                         if "action" not in result_dict:
+                            # If the "action" key is empty, the best action until that moment is the current one.
                             result_dict["action"] = [i, j]
                         minimax_value = self.iterate_over_state(i, j, state, current_player, state_utility)
                         if minimax_value > state_utility:
                             state_utility = minimax_value
                             action = [i, j]
-                            result_dict["action"] = action
+                            result_dict["action"] = action  # The best action is updated.
                         elif minimax_value == state_utility:
                             if self.DISTANCE_TO_OPTIMAL_PATH[j] > self.DISTANCE_TO_OPTIMAL_PATH[action[1]]:
                                 action = [i, j]
-                                result_dict["action"] = action
+                                result_dict["action"] = action  # The best action is updated.
         else:
             # Iterates over every field on the board horizontally.
             for i in range(0, self.BOARD_LENGTH_AND_WIDTH):
@@ -68,16 +72,17 @@ class AgenteAlejandroSAlejandroC:
                     piece_owner = state[i][j]
                     if piece_owner == 0:  # It is a blank field.
                         if "action" not in result_dict:
+                            # If the "action" key is empty, the best action until that moment is the current one.
                             result_dict["action"] = [i, j]
                         minimax_value = self.iterate_over_state(i, j, state, current_player, state_utility)
                         if minimax_value > state_utility:
                             state_utility = minimax_value
                             action = [i, j]
-                            result_dict["action"] = action
+                            result_dict["action"] = action  # The best action is updated.
                         elif minimax_value == state_utility:
                             if self.DISTANCE_TO_OPTIMAL_PATH[i] > self.DISTANCE_TO_OPTIMAL_PATH[action[0]]:
                                 action = [i, j]
-                                result_dict["action"] = action
+                                result_dict["action"] = action  # The best action is updated.
 
     def iterate_over_state(self, i, j, state, current_player, state_utility):
         next_state = copy.deepcopy(state)
@@ -136,13 +141,13 @@ class AgenteAlejandroSAlejandroC:
         visited_states = [[False] * self.BOARD_LENGTH_AND_WIDTH for i in range(self.BOARD_LENGTH_AND_WIDTH)]
         # The states are going to be evaluated according to the difference between the max and min i (if the player for
         # the evaluation wins vertically) or to the difference between the max and min j (if the player for the
-        # evaluation wins horizontally).
+        # evaluation wins horizontally). The number of virtual connections as well as the own adjacent fields are taken
+        # into account to evaluate a state, too. Each of the three characteristics in order of importance.
         piece_owner = self.get_last_movement_owner()
         if piece_owner == self.P1:
             state_utility = (3 * self.dfs_vertical(i, j, state, piece_owner, visited_states, i, i)) \
                             + (2 * self.count_virtual_connections_vertically(i, j, state, piece_owner)) \
                             + self.count_adjacent_own_fields(i, j, state, piece_owner)
-
         else:
             state_utility = (3 * self.dfs_horizontal(i, j, state, piece_owner, visited_states, j, j)) \
                             + (2 * self.count_virtual_connections_horizontally(i, j, state, piece_owner)) \
@@ -252,6 +257,8 @@ class AgenteAlejandroSAlejandroC:
 
         return adjacent_own_fields
 
+    # Checks how many of the four possible virtual connections a position has. The four possible virtual connections are
+    # strategic to the player who wins vertically.
     def count_virtual_connections_vertically(self, i, j, state, piece_owner):
         virtual_connections = 0
         if 0 <= i - 2 < self.BOARD_LENGTH_AND_WIDTH and 0 <= j + 1 < self.BOARD_LENGTH_AND_WIDTH \
@@ -269,6 +276,8 @@ class AgenteAlejandroSAlejandroC:
 
         return virtual_connections
 
+    # Checks how many of the four possible virtual connections a position has. The four possible virtual connections are
+    # strategic to the player who wins horizontally.
     def count_virtual_connections_horizontally(self, i, j, state, piece_owner):
         virtual_connections = 0
         if 0 <= i - 1 < self.BOARD_LENGTH_AND_WIDTH and 0 <= j + 2 < self.BOARD_LENGTH_AND_WIDTH \
@@ -286,10 +295,15 @@ class AgenteAlejandroSAlejandroC:
         return virtual_connections
 
     def exist_virtual_connection(self, evaluating_i, evaluating_j, fix_i, fix_j, state):
+        # Calculates the length of the intersection of two lists of tuples containing blank fields to determine how many
+        # of them appear in both lists.
         adjacent_blank_neighbors = len(set(self.get_blank_adjacent_fields_list(evaluating_i, evaluating_j, state))
                                        & set(self.get_blank_adjacent_fields_list(fix_i, fix_j, state)))
+        # If the size of that intersection is two, that means that the two mutual adjacent fields for the positions
+        # being analyzed are empty. Therefore, a virtual connection between them exists.
         return 1 if adjacent_blank_neighbors == 2 else 0
 
+    # Returns a list of tuples indicating which adjacent fields to the given position are blank fields.
     def get_blank_adjacent_fields_list(self, i, j, state):
         blank_adjacent_fields_list = []
         if 0 <= j + 1 < self.BOARD_LENGTH_AND_WIDTH and state[i][j + 1] == 0:
