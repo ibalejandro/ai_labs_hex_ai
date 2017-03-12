@@ -63,5 +63,5 @@ This section is specific for the teacher of the AI course at Universidad EAFIT.
 
 [Python]: <https://www.python.org/downloads/>
 [Virtual Connections]: <http://www.cs.middlebury.edu/~esarich/HexPaper.pdf>
-[YouTube Video]: <https://www.youtube.com/watch?v=98I_ST9GZSE&t=4870s>
+[YouTube Video]: <https://youtu.be/ckJcKDS26VU>
 
