@@ -35,13 +35,15 @@ The following link contains an explanation of the techniques used to implement t
 ### Usage
 This section is specific for the teacher of the AI course at Universidad EAFIT.
 
-1. In your Jupyter Notebook file, add the following line to your imports on the top.
+1. Copy the file named **"Agente_AlejandroS_AlejandroC"** to the folder where your Jupyter Notebook file is. 
+
+2. In your Jupyter Notebook file, add the following line to your imports on the top.
 
     ```ssh
     from Agente_AlejandroS_AlejandroC import AgenteAlejandroSAlejandroC
     ```
 
-2. Instantiate the variable which is going to be the agent. It is crucial to instantiate it before the game starts, because that one instance is going to be used during the whole game. Like this:
+3. Then, instantiate the variable which is going to be the agent. It is crucial to instantiate it before the game starts, because that one instance is going to be used during the whole game. Like this:
 
     ```ssh
     agente = AgenteAlejandroSAlejandroC()
@@ -51,13 +53,13 @@ This section is specific for the teacher of the AI course at Universidad EAFIT.
     End of the game
     ```
 
-3. To use the created instance in order to get the action to take from the intelligent agent during the game, invoke the ``get_action_to_take(state, current_player)`` method passing the state of the game and the current player to it as parameters. Like this:
+4. To use the created instance in order to get the action to take from the intelligent agent during the game, invoke the ``get_action_to_take(state, current_player)`` method passing the state of the game and the current player to it as parameters. Like this:
 
     ```ssh
     accionEj = agente.get_action_to_take(estado, jugadorActual)
     ```
 
-4. Execute your Jupyter Notebook file and see the game progression. It's like **magic**!
+5. Execute your Jupyter Notebook file and see the game progression. It's like **magic**!
 
 [Python]: <https://www.python.org/downloads/>
 [Virtual Connections]: <http://www.cs.middlebury.edu/~esarich/HexPaper.pdf>
